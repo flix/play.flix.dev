@@ -1,5 +1,6 @@
 import React from 'react';
-import {Alert, Badge, Button, Spinner} from "reactstrap";
+import {Badge, Button} from "reactstrap";
+import FontAwesome from 'react-fontawesome';
 
 class Menu extends React.Component {
 
@@ -16,9 +17,9 @@ class Menu extends React.Component {
     render() {
         return (
             <div className="menu">
-                <Button outline color="primary" size="lg" onClick={this.props.notifyRun}>Run</Button>
-
-                <Spinner type="grow" color="primary"/>
+                <Button outline color="secondary" onClick={this.props.notifyRun}>
+                    Run <FontAwesome name='play'/>
+                </Button>
 
                 {this.getConnectionStatus()}
             </div>
