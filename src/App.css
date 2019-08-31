@@ -31,7 +31,7 @@ code {
 
     width: 50%;
     height: 91vh;
-    margin-right: 0.5rem;
+    margin-right: 0.3rem;
 }
 
 .right-pane {
@@ -41,7 +41,7 @@ code {
 
     width: 50%;
     height: 91vh;
-    margin-left: 0.5rem;
+    margin-left: 0.3rem;
 
     padding-top: 0.5rem;
     padding-left: 2rem;
