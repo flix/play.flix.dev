@@ -15,21 +15,20 @@ class App extends React.Component {
         console.log("Connecting to: " + SocketAddress);
 
         this.state = {
-            connected: false,
+            connected: undefined,
             websocket: null,
             program: this.getInitialProgram(),
             result: ""
         };
 
-        try {
-            this.state.websocket = new window.WebSocket(SocketAddress);
-
-            this.state.websocket.onopen = event => {
-                console.log("Connected to: " + SocketAddress);
-                this.setState({connected: true})
-            }
-        } catch (ex) {
-            console.log("Unable to connect: " + ex)
+        this.state.websocket = new window.WebSocket(SocketAddress);
+        this.state.websocket.onopen = event => {
+            console.log("Connected to: " + SocketAddress);
+            this.setState({connected: true})
+        };
+        this.state.websocket.onerror = event => {
+            console.log("Unable to connect: " + event);
+            this.setState({connected: false})
         }
     }
 
