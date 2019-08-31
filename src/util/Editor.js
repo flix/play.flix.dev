@@ -39,7 +39,7 @@ class Editor extends Component {
                             value={this.state.input}
                             autoScrollEditorIntoView={true}
                             width={"100%"}
-                            height={"90.4vh"}
+                            height={"calc(100vh - 5.8rem)"}
                             editorProps={{
                                 $blockScrolling: true
                             }}/>

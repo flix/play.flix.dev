@@ -30,7 +30,7 @@ code {
     border-radius: 4px;
 
     width: 50%;
-    height: 91vh;
+    height: calc(100vh - 5.3rem);
     margin-right: 0.3rem;
 }
 
@@ -40,7 +40,7 @@ code {
     border-radius: 4px;
 
     width: 50%;
-    height: 91vh;
+    height: calc(100vh - 5.3rem);
     margin-left: 0.3rem;
 
     padding-top: 0.5rem;
