@@ -17,8 +17,8 @@ class Menu extends React.Component {
     render() {
         return (
             <div className="menu">
-                <Button outline color="secondary" onClick={this.props.notifyRun}>
-                    Run <FontAwesome name='play'/>
+                <Button color="success" onClick={this.props.notifyRun}>
+                    Run <FontAwesome name="play" className="ml-1"/>
                 </Button>
 
                 {this.getConnectionStatus()}
