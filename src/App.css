@@ -61,3 +61,7 @@ h3 {
     color: gray;
     margin-bottom: 1rem;
 }
+
+.ace_marker-layer .ace_active-line {
+    background-color: #ffffcc !important;
+}
