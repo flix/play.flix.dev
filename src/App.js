@@ -12,34 +12,37 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log("Connecting to: " + SocketAddress);
-
         let initialProgram = localStorage.getItem("program");
         if (typeof (initialProgram) !== "string") {
             console.log("No program saved in local storage. Using default.");
             initialProgram = this.getInitialProgram()
         }
 
+        console.log("Connecting to: " + SocketAddress);
+
         this.state = {
             connected: undefined,
-            websocket: null,
+            websocket: this.connect(),
             program: initialProgram,
             result: ""
         };
+    }
 
-        this.state.websocket = new window.WebSocket(SocketAddress);
-        this.state.websocket.onopen = event => {
+    connect() {
+        let websocket = new window.WebSocket(SocketAddress);
+        websocket.onopen = event => {
             console.log("Connected to: " + SocketAddress);
-            this.setState({connected: true})
+            this.setState({connected: true});
         };
-        this.state.websocket.onclose = event => {
+        websocket.onclose = event => {
             console.log("Disconnected: " + event);
-            this.setState({connected: false})
+            this.setState({connected: false});
         };
-        this.state.websocket.onerror = event => {
+        websocket.onerror = event => {
             console.log("Unable to connect: " + event);
-            this.setState({connected: false})
-        }
+            this.setState({connected: false});
+        };
+        return websocket;
     }
 
     runProgram(src, callback) {
