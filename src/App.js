@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 
 import Menu from "./Menu";
-import CodePane from "./CodePane";
-import OutputPane from "./OutputPane";
+import LeftPane from "./LeftPane";
+import RightPane from "./RightPane";
 
 const SocketAddress = 'wss://flix-evaluator.cs.au.dk/ws';
 
@@ -72,8 +72,8 @@ class App extends React.Component {
             <div>
                 <Menu connected={this.state.connected} notifyRun={this.notifyRun.bind(this)}/>
                 <div className="page">
-                    <CodePane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)}/>
-                    <OutputPane result={this.state.result}/>
+                    <LeftPane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)}/>
+                    <RightPane result={this.state.result}/>
                 </div>
             </div>
         );

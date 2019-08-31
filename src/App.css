@@ -24,7 +24,7 @@ code {
     margin-right: 1.5em;
 }
 
-.code-pane {
+.left-pane {
     background-color: #fafafa;
     border: 3px solid #a0a0a0;
     border-radius: 4px;
@@ -34,7 +34,7 @@ code {
     margin-right: 0.5rem;
 }
 
-.output-pane {
+.right-pane {
     background-color: #fffdf7;
     border: 1px solid #a0a0a0;
     border-radius: 4px;

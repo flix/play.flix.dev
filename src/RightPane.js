@@ -1,7 +1,7 @@
 import React from 'react';
 import GridLoader from 'react-spinners/GridLoader';
 
-class OutputPane extends React.Component {
+class RightPane extends React.Component {
 
     getResult() {
         if (this.props.result !== undefined) {
@@ -25,7 +25,7 @@ class OutputPane extends React.Component {
 
     render() {
         return (
-            <div className="output-pane">
+            <div className="right-pane">
                 <h3>Standard Output</h3>
                 {this.getResult()}
             </div>
@@ -33,4 +33,4 @@ class OutputPane extends React.Component {
     }
 }
 
-export default OutputPane;
+export default RightPane;

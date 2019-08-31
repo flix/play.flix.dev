@@ -1,10 +1,10 @@
 import React from 'react';
 import Editor from "./util/Editor";
 
-class CodePane extends React.Component {
+class LeftPane extends React.Component {
     render() {
         return (
-            <div className="code-pane">
+            <div className="left-pane">
                 <Editor code={this.props.initial} notifyOnChange={this.props.notifyOnChange}/>
             </div>
         )
@@ -12,4 +12,4 @@ class CodePane extends React.Component {
 
 }
 
-export default CodePane;
+export default LeftPane;
