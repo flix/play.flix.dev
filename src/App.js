@@ -15,7 +15,7 @@ class App extends React.Component {
         console.log("Connecting to: " + SocketAddress);
 
         let initialProgram = localStorage.getItem("program");
-        if (typeof(initialProgram) !== "string") {
+        if (typeof (initialProgram) !== "string") {
             console.log("No program saved in local storage. Using default.");
             initialProgram = this.getInitialProgram()
         }
@@ -31,6 +31,10 @@ class App extends React.Component {
         this.state.websocket.onopen = event => {
             console.log("Connected to: " + SocketAddress);
             this.setState({connected: true})
+        };
+        this.state.websocket.onclose = event => {
+            console.log("Disconnected: " + event);
+            this.setState({connected: false})
         };
         this.state.websocket.onerror = event => {
             console.log("Unable to connect: " + event);
@@ -56,8 +60,11 @@ class App extends React.Component {
     };
 
     notifyRun() {
+        let t = new Date();
         this.setState({result: undefined});
         this.runProgram(this.state.program, data => {
+            let e = new Date() - t;
+            console.log("Elapsed: " + e + "ms.");
             this.setState({result: data.result})
         })
     }
