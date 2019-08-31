@@ -14,10 +14,16 @@ class App extends React.Component {
 
         console.log("Connecting to: " + SocketAddress);
 
+        let initialProgram = localStorage.getItem("program");
+        if (typeof(initialProgram) !== "string") {
+            console.log("No program saved in local storage. Using default.");
+            initialProgram = this.getInitialProgram()
+        }
+
         this.state = {
             connected: undefined,
             websocket: null,
-            program: this.getInitialProgram(),
+            program: initialProgram,
             result: ""
         };
 
@@ -57,6 +63,7 @@ class App extends React.Component {
     }
 
     notifyOnChange(src) {
+        localStorage.setItem("program", src);
         this.setState({program: src});
     }
 
@@ -65,7 +72,7 @@ class App extends React.Component {
             <div>
                 <Menu connected={this.state.connected} notifyRun={this.notifyRun.bind(this)}/>
                 <div className="page">
-                    <CodePane initial={this.getInitialProgram()} notifyOnChange={this.notifyOnChange.bind(this)}/>
+                    <CodePane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)}/>
                     <OutputPane result={this.state.result}/>
                 </div>
             </div>
