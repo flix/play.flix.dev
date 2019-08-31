@@ -50,6 +50,7 @@ class App extends React.Component {
     };
 
     notifyRun() {
+        this.setState({result: undefined});
         this.runProgram("", data => {
             this.setState({result: data.result})
         })
@@ -65,7 +66,7 @@ class App extends React.Component {
                 <Menu connected={this.state.connected} notifyRun={this.notifyRun.bind(this)}/>
                 <div className="page">
                     <CodePane initial={this.getInitialProgram()} notifyOnChange={this.notifyOnChange.bind(this)}/>
-                    <OutputPane output={this.state.result}/>
+                    <OutputPane result={this.state.result}/>
                 </div>
             </div>
         );
