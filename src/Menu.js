@@ -6,11 +6,11 @@ class Menu extends React.Component {
 
     getConnectionStatus() {
         if (this.props.connected === undefined) {
-            return <Badge color="secondary" className="float-right"> Connecting </Badge>
+            return <Badge color="secondary" className="float-right mt-2"> Connecting </Badge>
         } else if (this.props.connected === true) {
-            return <Badge color="success" className="float-right"> Connected! </Badge>
+            return <Badge color="success" className="float-right mt-2"> Connected! </Badge>
         } else {
-            return <Badge color="danger" className="float-right"> Disconnected! </Badge>
+            return <Badge color="danger" className="float-right mt-2"> Disconnected! </Badge>
         }
     }
 
