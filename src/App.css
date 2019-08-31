@@ -69,3 +69,7 @@ h3 {
 .ace_marker-layer .ace_active-line {
     background-color: #ffffcc !important;
 }
+
+.ace_gutter-cell {
+    color: #b4b4b4;
+}
