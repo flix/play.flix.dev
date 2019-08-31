@@ -3,7 +3,7 @@ import AceEditor from 'react-ace'
 import 'brace/mode/scala'
 
 import FlixMode from './FlixMode'
-import 'brace/theme/chrome';
+import 'brace/theme/xcode';
 
 class Editor extends Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class Editor extends Component {
                     <div>
                         <AceEditor
                             mode='text'
-                            theme='chrome'
+                            theme='xcode'
                             ref="aceEditor"
                             fontSize={14}
                             showGutter={true}
