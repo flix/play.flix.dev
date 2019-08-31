@@ -51,7 +51,7 @@ class App extends React.Component {
 
     notifyRun() {
         this.setState({result: undefined});
-        this.runProgram("", data => {
+        this.runProgram(this.state.program, data => {
             this.setState({result: data.result})
         })
     }
