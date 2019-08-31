@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 
+import ReconnectingWebSocket from 'reconnecting-websocket';
+
 import Menu from "./Menu";
 import LeftPane from "./LeftPane";
 import RightPane from "./RightPane";
@@ -18,31 +20,39 @@ class App extends React.Component {
             initialProgram = this.getInitialProgram()
         }
 
-        console.log("Connecting to: " + SocketAddress);
-
         this.state = {
             connected: undefined,
-            websocket: this.connect(),
             program: initialProgram,
             result: ""
         };
+
+        this.connect();
     }
 
     connect() {
-        let websocket = new window.WebSocket(SocketAddress);
-        websocket.onopen = event => {
+        let options = {
+            connectionTimeout: 1000,
+            maxRetries: 10
+        };
+
+        console.log("Connecting to: " + SocketAddress);
+
+        this.websocket = new ReconnectingWebSocket(SocketAddress, [], options);
+
+        this.websocket.addEventListener("open", event => {
             console.log("Connected to: " + SocketAddress);
             this.setState({connected: true});
-        };
-        websocket.onclose = event => {
-            console.log("Disconnected: " + event);
+        });
+        this.websocket.addEventListener("close", event => {
+            console.log("Disconnected from: " + SocketAddress);
+            console.log(event);
             this.setState({connected: false});
-        };
-        websocket.onerror = event => {
-            console.log("Unable to connect: " + event);
+        });
+        this.websocket.addEventListener("error", event => {
+            console.log("Disconnected from: " + SocketAddress);
+            console.log(event);
             this.setState({connected: false});
-        };
-        return websocket;
+        });
     }
 
     runProgram(src, callback) {
@@ -51,7 +61,7 @@ class App extends React.Component {
             return;
         }
 
-        this.state.websocket.onmessage = event => {
+        this.websocket.onmessage = event => {
             console.log("Received reply from: " + SocketAddress);
             const data = JSON.parse(event.data);
 
@@ -59,7 +69,7 @@ class App extends React.Component {
             callback(data);
         };
 
-        this.state.websocket.send(src);
+        this.websocket.send(src);
     };
 
     notifyRun() {
