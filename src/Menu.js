@@ -1,27 +1,28 @@
 import React from 'react';
-import {Badge, Button} from "reactstrap";
+import {Button} from "reactstrap";
 import FontAwesome from 'react-fontawesome';
 
 class Menu extends React.Component {
 
-    getConnectionStatus() {
+    getRunButton() {
         if (this.props.connected === undefined) {
-            return <Badge color="secondary" className="mt-2"> Connecting </Badge>
+            return <Button disabled color="secondary"> Connecting... </Button>
         } else if (this.props.connected === true) {
-            return <Badge color="success" className=" mt-2"> Connected! </Badge>
+            return (
+                <Button color="success" onClick={this.props.notifyRun}>
+                    Run <FontAwesome name="play" className="ml-1"/>
+                </Button>
+            )
         } else {
-            return <Badge color="danger" className=" mt-2"> Disconnected! </Badge>
+            return <Button disabled color="danger"> Disconnected! Try to refresh the page... </Button>
         }
     }
 
     render() {
         return (
             <div className="menu">
-                <Button color="success" onClick={this.props.notifyRun}>
-                    Run <FontAwesome name="play" className="ml-1"/>
-                </Button>
 
-                {this.getConnectionStatus()}
+                {this.getRunButton()}
 
                 <a href="https://flix.dev/">
                     <Button color="info" className="float-right ml-3">
