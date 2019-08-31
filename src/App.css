@@ -35,7 +35,7 @@ code {
 }
 
 .right-pane {
-    background-color: #fffdf7;
+    background-color: #fffffa;
     border: 1px solid #a0a0a0;
     border-radius: 4px;
 
@@ -59,6 +59,10 @@ h3 {
     text-align: center;
     font-size: 1.1rem;
     color: gray;
+
+    border-bottom: 1px solid #a0a0a0;
+    padding-bottom: 0.3rem;
+
     margin-bottom: 1rem;
 }
 
