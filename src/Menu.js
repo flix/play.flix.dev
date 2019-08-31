@@ -25,19 +25,19 @@ class Menu extends React.Component {
                 {this.getRunButton()}
 
                 <a href="https://flix.dev/">
-                    <Button color="info" className="float-right ml-3">
+                    <Button color="link" className="float-right ml-3">
                         Website
                     </Button>
                 </a>
 
                 <a href="https://flix.dev/programming-flix/">
-                    <Button color="info" className="float-right ml-3">
+                    <Button color="link" className="float-right ml-3">
                         Documentation
                     </Button>
                 </a>
 
                 <a href="https://flix.dev/api/">
-                    <Button color="info" className="float-right ml-3">
+                    <Button color="link" className="float-right ml-3">
                         Standard Library
                     </Button>
                 </a>
