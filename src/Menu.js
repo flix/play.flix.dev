@@ -10,7 +10,7 @@ class Menu extends React.Component {
         } else if (this.props.connected === true) {
             return (
                 <Button color="success" onClick={this.props.notifyRun}>
-                    Run <FontAwesome name="play" className="ml-1"/>
+                    Compile & Run <FontAwesome name="play" className="ml-2"/>
                 </Button>
             )
         } else {
