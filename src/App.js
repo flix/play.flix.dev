@@ -31,8 +31,7 @@ class App extends React.Component {
 
     connect() {
         let options = {
-            connectionTimeout: 1000,
-            maxRetries: 10
+            connectionTimeout: 2500
         };
 
         console.log("Connecting to: " + SocketAddress);
