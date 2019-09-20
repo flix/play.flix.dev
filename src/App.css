@@ -47,6 +47,7 @@ code {
     padding-left: 2rem;
     padding-right: 2rem;
     padding-bottom: 0.5rem;
+    overflow-y: scroll;
 }
 
 .spinner {
