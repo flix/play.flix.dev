@@ -7,7 +7,7 @@ import Menu from "./Menu";
 import LeftPane from "./LeftPane";
 import RightPane from "./RightPane";
 
-const SocketAddress = 'wss://flix-evaluator.cs.au.dk/ws';
+const SocketAddress = 'wss://evaluator.flix.dev/ws';
 
 class App extends React.Component {
 
