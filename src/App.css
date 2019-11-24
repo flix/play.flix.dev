@@ -56,6 +56,15 @@ code {
     justify-content: center;
 }
 
+.statistics {
+    color: gray;
+    font-size: 0.8rem;
+    text-align: right;
+
+    border-top: 1px solid #b4b4b4;
+    padding-top: 0.3rem;
+}
+
 h3 {
     text-align: center;
     font-size: 1.1rem;

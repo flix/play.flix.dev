@@ -5,6 +5,7 @@
   "homepage": "https://play.flix.dev/",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "pretty-ms": "^5.1.0",
     "react": "^16.9.0",
     "react-ace": "^7.0.4",
     "react-dom": "^16.9.0",

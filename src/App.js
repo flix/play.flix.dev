@@ -23,7 +23,10 @@ class App extends React.Component {
         this.state = {
             connected: undefined,
             program: initialProgram,
-            result: ""
+            result: "",
+            version: undefined,
+            compilationTime: undefined,
+            evaluationTime: undefined
         };
 
         this.connect();
@@ -73,11 +76,16 @@ class App extends React.Component {
 
     notifyRun() {
         let t = new Date();
-        this.setState({result: undefined});
+        this.setState({result: undefined, version: undefined, compilationTime: undefined, evaluationTime: undefined});
         this.runProgram(this.state.program, data => {
             let e = new Date() - t;
             console.log("Elapsed: " + e + "ms.");
-            this.setState({result: data.result})
+            this.setState({
+                result: data.result,
+                version: data.version,
+                compilationTime: data.compilationTime,
+                evaluationTime: data.evaluationTime
+            })
         })
     }
 
@@ -92,7 +100,11 @@ class App extends React.Component {
                 <Menu connected={this.state.connected} notifyRun={this.notifyRun.bind(this)}/>
                 <div className="page">
                     <LeftPane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)}/>
-                    <RightPane result={this.state.result}/>
+                    <RightPane
+                        result={this.state.result}
+                        version={this.state.version}
+                        compilationTime={this.state.compilationTime}
+                        evaluationTime={this.state.evaluationTime}/>
                 </div>
             </div>
         );
