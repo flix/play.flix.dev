@@ -71,7 +71,11 @@ class App extends React.Component {
             callback(data);
         };
 
-        this.websocket.send(src);
+        let data = {
+            src: src
+        };
+
+        this.websocket.send(JSON.stringify(data));
     };
 
     notifyRun() {
