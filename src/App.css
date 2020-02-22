@@ -10,6 +10,10 @@ code {
 }
 
 .menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;

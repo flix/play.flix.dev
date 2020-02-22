@@ -23,6 +23,12 @@ class App extends React.Component {
         this.state = {
             connected: undefined,
             program: initialProgram,
+            options: {
+                xallowredundancies: true,
+                xcore: false,
+                xnoeffects: false,
+                xnostratifier: false,
+            },
             result: "",
             version: undefined,
             compilationTime: undefined,
@@ -71,8 +77,14 @@ class App extends React.Component {
             callback(data);
         };
 
+        let options = this.state.options;
+
         let data = {
-            src: src
+            src: src,
+            "xallowredundancies": options.xallowredundancies,
+            "xcore": options.xcore,
+            "xnoeffects": options.xnoeffects,
+            "xnostratifier": options.xnostratifier,
         };
 
         this.websocket.send(JSON.stringify(data));
@@ -98,10 +110,19 @@ class App extends React.Component {
         this.setState({program: src});
     }
 
+    notifyOptionsChange(key) {
+        let opts = this.state.options;
+        opts[key] = !opts[key];
+        this.setState({options: opts})
+    }
+
     render() {
         return (
             <div>
-                <Menu connected={this.state.connected} notifyRun={this.notifyRun.bind(this)}/>
+                <Menu connected={this.state.connected}
+                      options={this.state.options}
+                      notifyRun={this.notifyRun.bind(this)}
+                      notifyOptionsChange={this.notifyOptionsChange.bind(this)}/>
                 <div className="page">
                     <LeftPane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)}/>
                     <RightPane
