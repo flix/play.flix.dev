@@ -35,6 +35,10 @@ code {
 }
 
 .right-pane {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     background-color: #fffffa;
     border: 1px solid #b4b4b4;
     border-radius: 4px;

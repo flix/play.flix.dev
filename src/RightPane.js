@@ -53,9 +53,13 @@ class RightPane extends React.Component {
     render() {
         return (
             <div className="right-pane">
-                <h3>Standard Output</h3>
-                {this.getResult()}
-                {this.getStatistics()}
+                <div className="right-pane-top">
+                    <h3>Standard Output</h3>
+                    {this.getResult()}
+                </div>
+                <div className="right-pane-bot">
+                    {this.getStatistics()}
+                </div>
             </div>
         )
     }
