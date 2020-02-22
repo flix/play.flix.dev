@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, CustomInput, Form, FormGroup, Input, Label} from "reactstrap";
+import {Button, CustomInput, Form} from "reactstrap";
 import FontAwesome from 'react-fontawesome';
 
 class Menu extends React.Component {
@@ -26,37 +26,30 @@ class Menu extends React.Component {
                     {this.getRunButton()}
 
                     <CustomInput
-                        id="xallowredundancies"
+                        id="enableLibrary"
                         type="checkbox"
                         inline={true}
-                        label="Allow Unused Code"
-                        checked={this.props.options.xallowredundancies}
-                        onChange={() => this.props.notifyOptionsChange("xallowredundancies")}
+                        label="Library"
+                        checked={this.props.options.enableLibrary}
+                        onChange={() => this.props.notifyOptionsChange("enableLibrary")}
                         className="ml-3"/>
 
                     <CustomInput
-                        id="xcore"
+                        id="enableEffects"
                         type="checkbox"
                         inline={true}
-                        label="Std Library"
-                        checked={!this.props.options.xcore}
-                        onChange={() => this.props.notifyOptionsChange("xcore")}/>
+                        label="Effects"
+                        checked={this.props.options.enableEffects}
+                        onChange={() => this.props.notifyOptionsChange("enableEffects")}/>
 
                     <CustomInput
-                        id="xnoeffects"
+                        id="enableUnusedCode"
                         type="checkbox"
                         inline={true}
-                        label="  Effects"
-                        checked={!this.props.options.xnoeffects}
-                        onChange={() => this.props.notifyOptionsChange("xnoeffects")}/>
+                        label="Unused Code"
+                        checked={this.props.options.enableUnusedCode}
+                        onChange={() => this.props.notifyOptionsChange("enableUnusedCode")}/>
 
-                    <CustomInput
-                        id="xnostratifier"
-                        type="checkbox"
-                        inline={true}
-                        label="Stratifier"
-                        checked={!this.props.options.xnostratifier}
-                        onChange={() => this.props.notifyOptionsChange("xnostratifier")}/>
                 </Form>
 
                 <div>

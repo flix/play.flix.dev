@@ -24,10 +24,9 @@ class App extends React.Component {
             connected: undefined,
             program: initialProgram,
             options: {
-                xallowredundancies: true,
-                xcore: false,
-                xnoeffects: false,
-                xnostratifier: false,
+                enableUnusedCode: true,
+                enableLibrary: true,
+                enableEffects: true
             },
             result: "",
             version: undefined,
@@ -81,10 +80,9 @@ class App extends React.Component {
 
         let data = {
             src: src,
-            "xallowredundancies": options.xallowredundancies,
-            "xcore": options.xcore,
-            "xnoeffects": options.xnoeffects,
-            "xnostratifier": options.xnostratifier,
+            "xallowredundancies": options.enableUnusedCode,
+            "xcore": !options.enableLibrary,
+            "xnoeffects": !options.enableEffects
         };
 
         this.websocket.send(JSON.stringify(data));
