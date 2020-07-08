@@ -5,7 +5,7 @@ export class CustomHighlightRules extends window.ace.acequire("ace/mode/text_hig
         super();
 
         var keywords = (
-            "case|def|else|enum|if|lat|let|match|not|project|rel|select|spawn|solve|with"
+            "namespace|def|case|enum|opaque|type|alias|rel|lat|use|null|ref|deref|if|else|let|let*|new|as|get|set|import|match|match?|select|spawn|???|solve|project|fold"
         );
 
         var builtinConstants = (
@@ -17,7 +17,7 @@ export class CustomHighlightRules extends window.ace.acequire("ace/mode/text_hig
         );
 
         var dataTypes = (
-            "Bool|Int|Str|Option|Result|List"
+            "Unit|Bool|Char|Float32|Float64|Int|Int8|Int16|Int32|Int64|BigInt|String|Array|Channel|Ref|true|false|not|and|or|#Set|#Map|Pure|Impure"
         );
 
         var keywordMapper = this.createKeywordMapper({
