@@ -1,19 +1,19 @@
 {
-  "name": "play",
+  "name": "play.flix.dev",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://play.flix.dev/",
   "dependencies": {
-    "bootstrap": "^4.4.1",
-    "pretty-ms": "^6.0.0",
-    "react": "^16.12.0",
+    "bootstrap": "^4.5.0",
+    "pretty-ms": "^7.0.0",
+    "react": "^16.13.1",
     "react-ace": "^7.0.5",
-    "react-dom": "^16.12.0",
+    "react-dom": "^16.13.1",
     "react-fontawesome": "^1.7.1",
     "react-newline-to-break": "^1.0.6",
-    "react-scripts": "^3.4.0",
-    "react-spinners": "^0.8.0",
-    "reactstrap": "^8.4.1",
+    "react-scripts": "^3.4.1",
+    "react-spinners": "^0.9.0",
+    "reactstrap": "^8.5.1",
     "reconnecting-websocket": "^4.4.0"
   },
   "scripts": {
