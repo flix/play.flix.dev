@@ -35,14 +35,6 @@ class Menu extends React.Component {
                         className="ml-3"/>
 
                     <CustomInput
-                        id="enableEffects"
-                        type="checkbox"
-                        inline={true}
-                        label="Effects"
-                        checked={this.props.options.enableEffects}
-                        onChange={() => this.props.notifyOptionsChange("enableEffects")}/>
-
-                    <CustomInput
                         id="enableUnusedCode"
                         type="checkbox"
                         inline={true}
