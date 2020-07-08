@@ -1,8 +1,17 @@
 import React from 'react';
+import CircleLoader from 'react-spinners/CircleLoader';
 import GridLoader from 'react-spinners/GridLoader';
+import HashLoader from 'react-spinners/HashLoader';
 import prettyms from 'pretty-ms';
 
 class RightPane extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            "spinner": Math.floor(3 * Math.random())
+        }
+    }
 
     getResult() {
         if (this.props.result !== undefined) {
@@ -12,15 +21,34 @@ class RightPane extends React.Component {
                     </pre>
             </code>
         } else {
-            return <div className="spinner">
-                <GridLoader
-                    sizeUnit={"px"}
-                    size={50}
-                    color={'#28a745'}
-                    loading={true}
-                    className="loader"
-                />
-            </div>
+            if (this.state.spinner === 0) {
+                return <div className="spinner">
+                    <CircleLoader
+                        sizeUnit={"px"}
+                        size={150}
+                        color={'#28a745'}
+                        loading={true}
+                    />
+                </div>
+            } else if (this.state.spinner === 2) {
+                return <div className="spinner">
+                    <HashLoader
+                        sizeUnit={"px"}
+                        size={150}
+                        color={'#28a745'}
+                        loading={true}
+                    />
+                </div>
+            } else {
+                return <div className="spinner">
+                    <GridLoader
+                        sizeUnit={"px"}
+                        size={50}
+                        color={'#28a745'}
+                        loading={true}
+                    />
+                </div>
+            }
         }
     }
 
