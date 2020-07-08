@@ -17,7 +17,7 @@ export class CustomHighlightRules extends window.ace.acequire("ace/mode/text_hig
         );
 
         var dataTypes = (
-            "Unit|Bool|Char|Float32|Float64|Int|Int8|Int16|Int32|Int64|BigInt|String|Array|Channel|Ref|true|false|not|and|or|#Set|#Map|Pure|Impure"
+            "Unit|Bool|Char|Float32|Float64|Int|Int8|Int16|Int32|Int64|BigInt|String|Array|Channel|Ref|true|false|not|and|or|Pure|Impure"
         );
 
         var keywordMapper = this.createKeywordMapper({
