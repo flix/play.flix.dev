@@ -51,13 +51,13 @@ class Menu extends React.Component {
                         </Button>
                     </a>
 
-                    <a href="https://flix.dev/programming-flix/">
+                    <a href="https://doc.flix.dev/">
                         <Button color="link" className="ml-3">
                             Documentation
                         </Button>
                     </a>
 
-                    <a href="https://flix.dev/api/">
+                    <a href="https://api.flix.dev/">
                         <Button color="link" className="ml-3">
                             Standard Library
                         </Button>
