@@ -18,6 +18,10 @@ class Menu extends React.Component {
         }
     }
 
+    updateLinkUrl() {
+        window.history.pushState(undefined, undefined, this.props.url)
+    }
+
     render() {
         return (
             <div className="menu">
@@ -63,11 +67,9 @@ class Menu extends React.Component {
                         </Button>
                     </a>
 
-                    <a href={this.props.url}>
-                        <Button color="info" className="ml-3">
-                            Shareable Link <FontAwesome name="clipboard" className="ml-2"/>
-                        </Button>
-                    </a>
+                    <Button color="info" className="ml-3" onClick={this.updateLinkUrl.bind(this)}>
+                        Shareable Link <FontAwesome name="clipboard" className="ml-2"/>
+                    </Button>
 
                 </div>
 
