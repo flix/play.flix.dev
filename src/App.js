@@ -3,6 +3,8 @@ import './App.css';
 
 import ReconnectingWebSocket from 'reconnecting-websocket';
 
+import LZString from "lz-string";
+
 import Menu from "./Menu";
 import LeftPane from "./LeftPane";
 import RightPane from "./RightPane";
@@ -14,9 +16,29 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        let initialProgram = localStorage.getItem("program");
-        if (typeof (initialProgram) !== "string") {
-            console.log("No program saved in local storage. Using default.");
+        // Determine the initial program to put in the editor.
+        let initialProgram = undefined
+
+        // Decode the initial program from the query param (if available).
+        let urlParams = new URLSearchParams(window.location.search);
+        let qparam = urlParams.get('q')
+        if (typeof qparam === "string" && qparam.length > 0) {
+            console.log("Using initial program from query parameter.")
+            initialProgram = LZString.decompressFromEncodedURIComponent(qparam)
+        }
+
+        // Otherwise, retrieve the initial program from local storage (if available).
+        if (initialProgram === undefined) {
+            let storedProgram = localStorage.getItem("program");
+            if (typeof storedProgram === "string") {
+                console.log("Using initial program from local storage.")
+                initialProgram = storedProgram
+            }
+        }
+
+        // Otherwise use the default program.
+        if (initialProgram === undefined) {
+            console.log("Using default initial program.");
             initialProgram = this.getInitialProgram()
         }
 
@@ -30,7 +52,8 @@ class App extends React.Component {
             result: "",
             version: undefined,
             compilationTime: undefined,
-            evaluationTime: undefined
+            evaluationTime: undefined,
+            url: "./"
         };
 
         this.connect();
@@ -103,7 +126,9 @@ class App extends React.Component {
 
     notifyOnChange(src) {
         localStorage.setItem("program", src);
-        this.setState({program: src});
+        let qparam = LZString.compressToEncodedURIComponent(src)
+        let url = "?q=" + qparam
+        this.setState({program: src, url: url});
     }
 
     notifyOptionsChange(key) {
@@ -118,7 +143,8 @@ class App extends React.Component {
                 <Menu connected={this.state.connected}
                       options={this.state.options}
                       notifyRun={this.notifyRun.bind(this)}
-                      notifyOptionsChange={this.notifyOptionsChange.bind(this)}/>
+                      notifyOptionsChange={this.notifyOptionsChange.bind(this)}
+                      url={this.state.url}/>
                 <div className="page">
                     <LeftPane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)}/>
                     <RightPane

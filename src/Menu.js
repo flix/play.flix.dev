@@ -62,6 +62,13 @@ class Menu extends React.Component {
                             Standard Library
                         </Button>
                     </a>
+
+                    <a href={this.props.url}>
+                        <Button color="info" className="ml-3">
+                            Shareable Link <FontAwesome name="clipboard" className="ml-2"/>
+                        </Button>
+                    </a>
+
                 </div>
 
             </div>
