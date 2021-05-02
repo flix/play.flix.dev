@@ -53,7 +53,7 @@ class App extends React.Component {
             version: undefined,
             compilationTime: undefined,
             evaluationTime: undefined,
-            url: "./"
+            url: LZString.compressToEncodedURIComponent(initialProgram)
         };
 
         this.connect();
