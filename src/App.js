@@ -165,7 +165,7 @@ enum Shape {
     case Rectangle(Int, Int) // height and width
 }
 
-/// Computes the area of the given shape using 
+/// Computes the area of the given shape using
 /// pattern matching and basic arithmetic.
 def area(s: Shape): Int = match s {
     case Circle(r)       => 3 * (r * r)
@@ -174,7 +174,9 @@ def area(s: Shape): Int = match s {
 }
 
 // Computes the area of a 2 by 4.
-def main(): Int = area(Rectangle(2, 4))
+def main(_args: Array[String]): Int32 & Impure = 
+    area(Rectangle(2, 4)) |> println;
+    0
 `
     }
 }
