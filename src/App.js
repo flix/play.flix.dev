@@ -160,8 +160,8 @@ class App extends React.Component {
     getInitialProgram() {
         return `/// An algebraic data type for shapes.
 enum Shape {
-    case Circle(Int32),        // circle radius
-    case Square(Int32),        // side length
+    case Circle(Int32),          // circle radius
+    case Square(Int32),          // side length
     case Rectangle(Int32, Int32) // height and width
 }
 
