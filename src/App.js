@@ -174,9 +174,8 @@ def area(s: Shape): Int32 = match s {
 }
 
 // Computes the area of a 2 by 4.
-def main(_args: Array[String]): Int32 & Impure = 
-    area(Rectangle(2, 4)) |> println;
-    0
+def main(): Unit & Impure =
+    area(Rectangle(2, 4)) |> println
 `
     }
 }
