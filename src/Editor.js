@@ -1,19 +1,13 @@
 import React, {Component} from 'react';
 import AceEditor from 'react-ace'
-import 'brace/mode/scala'
 
-import FlixMode from './FlixMode'
-import 'brace/theme/xcode';
+import "ace-builds/src-noconflict/mode-scala";
+import "ace-builds/src-noconflict/theme-xcode";
 
 class Editor extends Component {
     constructor(props) {
         super(props);
         this.state = {input: this.props.code}
-    }
-
-    componentDidMount() {
-        const customMode = new FlixMode();
-        this.refs.aceEditor.editor.getSession().setMode(customMode);
     }
 
     onChange = input => {
@@ -27,7 +21,7 @@ class Editor extends Component {
                 <div>
                     <div>
                         <AceEditor
-                            mode='text'
+                            mode='scala'
                             theme='xcode'
                             ref="aceEditor"
                             fontSize={14}

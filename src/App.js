@@ -45,10 +45,7 @@ class App extends React.Component {
         this.state = {
             connected: undefined,
             program: initialProgram,
-            options: {
-                enableUnusedCode: true,
-                enableLibrary: true,
-            },
+            options: {},
             result: "",
             version: undefined,
             compilationTime: undefined,
@@ -68,7 +65,7 @@ class App extends React.Component {
 
         this.websocket = new ReconnectingWebSocket(SocketAddress, [], options);
 
-        this.websocket.addEventListener("open", event => {
+        this.websocket.addEventListener("open", _ => {
             console.log("Connected to: " + SocketAddress);
             this.setState({connected: true});
         });
@@ -98,12 +95,8 @@ class App extends React.Component {
             callback(data);
         };
 
-        let options = this.state.options;
-
         let data = {
-            src: src,
-            "xallowredundancies": options.enableUnusedCode,
-            "xcore": !options.enableLibrary
+            src: src
         };
 
         this.websocket.send(JSON.stringify(data));
@@ -131,19 +124,12 @@ class App extends React.Component {
         this.setState({program: src, url: url});
     }
 
-    notifyOptionsChange(key) {
-        let opts = this.state.options;
-        opts[key] = !opts[key];
-        this.setState({options: opts})
-    }
-
     render() {
         return (
             <div>
                 <Menu connected={this.state.connected}
                       options={this.state.options}
                       notifyRun={this.notifyRun.bind(this)}
-                      notifyOptionsChange={this.notifyOptionsChange.bind(this)}
                       url={this.state.url}/>
                 <div className="page">
                     <LeftPane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)}/>
