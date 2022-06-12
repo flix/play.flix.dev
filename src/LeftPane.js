@@ -1,5 +1,5 @@
 import React from 'react';
-import Editor from "./util/Editor";
+import Editor from "./Editor";
 
 class LeftPane extends React.Component {
     render() {

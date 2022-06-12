@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, CustomInput, Form} from "reactstrap";
+import {Button, Form} from "reactstrap";
 import FontAwesome from 'react-fontawesome';
 
 class Menu extends React.Component {
@@ -9,7 +9,7 @@ class Menu extends React.Component {
             return <Button disabled color="secondary" className="ml-2"> Connecting... </Button>
         } else if (this.props.connected === true) {
             return (
-                <Button color="success" onClick={this.props.notifyRun}>
+                <Button color="primary" onClick={this.props.notifyRun}>
                     Compile & Run <FontAwesome name="play" className="ml-2"/>
                 </Button>
             )
@@ -28,24 +28,6 @@ class Menu extends React.Component {
 
                 <Form>
                     {this.getRunButton()}
-
-                    <CustomInput
-                        id="enableLibrary"
-                        type="checkbox"
-                        inline={true}
-                        label="Library"
-                        checked={this.props.options.enableLibrary}
-                        onChange={() => this.props.notifyOptionsChange("enableLibrary")}
-                        className="ml-3"/>
-
-                    <CustomInput
-                        id="enableUnusedCode"
-                        type="checkbox"
-                        inline={true}
-                        label="Unused Code"
-                        checked={this.props.options.enableUnusedCode}
-                        onChange={() => this.props.notifyOptionsChange("enableUnusedCode")}/>
-
                 </Form>
 
                 <div>
@@ -67,7 +49,7 @@ class Menu extends React.Component {
                         </Button>
                     </a>
 
-                    <Button color="info" className="ml-3" onClick={this.updateLinkUrl.bind(this)}>
+                    <Button color="light" className="ml-3" onClick={this.updateLinkUrl.bind(this)}>
                         Shareable Link <FontAwesome name="clipboard" className="ml-2"/>
                     </Button>
 
