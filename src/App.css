@@ -19,6 +19,16 @@ code {
     margin-right: 1rem;
 }
 
+.menu > form {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: nowrap;
+}
+
+.menu > form > * {
+    white-space: nowrap;
+}
+
 .page {
     display: flex;
     flex-direction: row;

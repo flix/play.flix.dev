@@ -1,8 +1,16 @@
 import React from 'react';
-import {Button, Form} from "reactstrap";
+import { Button, Form } from 'reactstrap'
 import FontAwesome from 'react-fontawesome';
+import SamplesData from './data/Samples'
 
 class Menu extends React.Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        choice: undefined,
+        samples: SamplesData,
+      }
+    }
 
     getRunButton() {
         if (this.props.connected === undefined) {
@@ -18,6 +26,34 @@ class Menu extends React.Component {
         }
     }
 
+    getDropDown() {
+      return (
+        <select
+          defaultValue={"placeholder"}
+          value={this.state.choice}
+          onChange={this.onDropdownChoice.bind(this)}
+          style={{ textOverflow: 'ellipsis' }}
+          className="ml-2 w-75"
+        >
+          <option disabled value="placeholder"> Try an example </option>
+
+          {this.state.samples.map((sample, index) => (
+            <option key={index} value={index}>
+              {sample.name}
+            </option>
+          ))}
+        </select>
+      )
+    }
+
+    onDropdownChoice(event) {
+      let newChoice = Number(event.target.value)
+      this.setState({
+        choice: newChoice,
+      })
+      this.props.notifySampleChange(this.state.samples[newChoice].code)
+    }
+
     updateLinkUrl() {
         window.history.pushState(undefined, undefined, this.props.url)
     }
@@ -28,6 +64,7 @@ class Menu extends React.Component {
 
                 <Form>
                     {this.getRunButton()}
+                    {this.getDropDown()}
                 </Form>
 
                 <div>

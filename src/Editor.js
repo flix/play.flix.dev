@@ -5,13 +5,7 @@ import "ace-builds/src-noconflict/mode-scala";
 import "ace-builds/src-noconflict/theme-xcode";
 
 class Editor extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {input: this.props.code}
-    }
-
     onChange = input => {
-        this.setState({input: input});
         this.props.notifyOnChange(input)
     };
 
@@ -30,7 +24,7 @@ class Editor extends Component {
                             highlightActiveLine={true}
                             highlightSelectedWord={true}
                             onChange={this.onChange}
-                            value={this.state.input}
+                            value={this.props.code}
                             autoScrollEditorIntoView={true}
                             width={"100%"}
                             height={"calc(100vh - 5.8rem)"}
