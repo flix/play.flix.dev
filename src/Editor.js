@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import AceEditor from 'react-ace'
 
-import "ace-builds/src-noconflict/mode-scala";
+import "ace-builds/src-noconflict/mode-flix";
 import "ace-builds/src-noconflict/theme-xcode";
 
 class Editor extends Component {
@@ -21,7 +21,7 @@ class Editor extends Component {
                 <div>
                     <div>
                         <AceEditor
-                            mode='scala'
+                            mode='flix'
                             theme='xcode'
                             ref="aceEditor"
                             fontSize={14}
