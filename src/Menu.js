@@ -44,8 +44,7 @@ class Menu extends React.Component {
         className="ml-2 w-75"
       >
         <option disabled value="placeholder">
-          {' '}
-          Try an example{' '}
+          -- select example --
         </option>
 
         {this.state.samples.map((sample, index) => (
