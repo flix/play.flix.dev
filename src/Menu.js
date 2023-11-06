@@ -1,14 +1,22 @@
 import React from 'react'
 import { Button, Form } from 'reactstrap'
 import FontAwesome from 'react-fontawesome'
+import SamplesData from './data/Samples'
 
 class Menu extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      choice: undefined,
+      samples: SamplesData,
+    }
+  }
+
   getRunButton() {
     if (this.props.connected === undefined) {
       return (
         <Button disabled color="secondary" className="ml-2">
-          {' '}
-          Connecting...{' '}
+          Connecting...
         </Button>
       )
     } else if (this.props.connected === true) {
@@ -20,11 +28,40 @@ class Menu extends React.Component {
     } else {
       return (
         <Button disabled color="danger" className="ml-2">
-          {' '}
-          Disconnected! Try to refresh the page...{' '}
+          Disconnected! Try to refresh the page...
         </Button>
       )
     }
+  }
+
+  getDropDown() {
+    return (
+      <select
+        defaultValue={'placeholder'}
+        value={this.state.choice}
+        onChange={this.onDropdownChoice.bind(this)}
+        style={{ textOverflow: 'ellipsis' }}
+        className="ml-2 w-75"
+      >
+        <option disabled value="placeholder">
+          -- select example --
+        </option>
+
+        {this.state.samples.map((sample, index) => (
+          <option key={index} value={index}>
+            {sample.name}
+          </option>
+        ))}
+      </select>
+    )
+  }
+
+  onDropdownChoice(event) {
+    let newChoice = Number(event.target.value)
+    this.setState({
+      choice: newChoice,
+    })
+    this.props.notifySampleChange(this.state.samples[newChoice].code)
   }
 
   updateLinkUrl() {
@@ -34,7 +71,10 @@ class Menu extends React.Component {
   render() {
     return (
       <div className="menu">
-        <Form>{this.getRunButton()}</Form>
+        <Form>
+          {this.getRunButton()}
+          {this.getDropDown()}
+        </Form>
 
         <div>
           <a href="https://flix.dev/">

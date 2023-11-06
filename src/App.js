@@ -130,6 +130,7 @@ class App extends React.Component {
           connected={this.state.connected}
           options={this.state.options}
           notifyRun={this.notifyRun.bind(this)}
+          notifySampleChange={this.notifyOnChange.bind(this)}
           url={this.state.url}
         />
         <div className="page">
