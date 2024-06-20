@@ -9,7 +9,7 @@ import Menu from './Menu'
 import LeftPane from './LeftPane'
 import RightPane from './RightPane'
 
-const SocketAddress = 'wss://evaluator.flix.dev/ws'
+const SocketAddress = 'wss://tivoli.flix.dev/ws'
 
 class App extends React.Component {
   constructor(props) {
