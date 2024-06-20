@@ -1,4 +1,4 @@
-const version = '0.41.0'
+const version = '0.48.0'
 export const baseUrl = `https://raw.githubusercontent.com/flix/flix/v${version}/examples/`
 export const sampleFiles = [
   {
