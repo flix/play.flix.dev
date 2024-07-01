@@ -6,6 +6,9 @@ async function fetchSamples(baseUrl, files) {
   return await Promise.all(
     files.map(async sample => {
       const response = await fetch(baseUrl + sample.file)
+      if (response.status !== 200) {
+        throw new Error(`Failed to fetch ${baseUrl + sample.file}: ${response.statusText}`)
+      }
       const code = await response.text()
 
       return {
@@ -25,5 +28,5 @@ export default ${objString};
 `
 
 // The file is placed in the src directory to include it in the bundle
-fs.mkdirSync('./src/data', { recursive: true })
-fs.writeFileSync('./src/data/Samples.js', fileString)
+fs.mkdirSync('./src/generated', { recursive: true })
+fs.writeFileSync('./src/generated/samples.js', fileString)
