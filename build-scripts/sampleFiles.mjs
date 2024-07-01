@@ -86,8 +86,8 @@ export const sampleFiles = [
     file: 'simple-card-game.flix',
   },
   {
-    name: 'Deriving Type Classes',
-    file: 'deriving-type-classes.flix',
+    name: 'Deriving Traits',
+    file: 'deriving-traits.flix',
   },
   {
     name: 'Internal Mutability with Regions',

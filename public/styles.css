@@ -1,0 +1,160 @@
+:root {
+  --light-bg-color-1: #ffffff;
+  --light-bg-color-2: #fcfcfd;
+  --light-bg-color-3: #f8f9fa;
+  --light-border-color: rgba(0, 0, 0, 0.071);
+  --light-heading-color: #212529;
+  --light-text-color: #111111;
+  --light-faded-text-color: #8a8a8a;
+  --light-shadow-color: rgba(0, 0, 0, 0.05);
+  --light-highlight-color: rgba(0, 0, 0, 0.3);
+
+  --dark-bg-color-1: #151719;
+  --dark-bg-color-2: #101214;
+  --dark-bg-color-3: #0e0f11;
+  --dark-border-color: rgba(255, 255, 255, 0.07);
+  --dark-heading-color: #e6e6e6;
+  --dark-text-color: #f7f7f7;
+  --dark-faded-text-color: #8a8a8a;
+  --dark-shadow-color: rgba(0, 0, 0, 0.3);
+  --dark-highlight-color: hsla(50, 0%, 100%, 0.3);
+
+  --bg-color-1: var(--light-bg-color-1);
+  --bg-color-2: var(--light-bg-color-2);
+  --bg-color-3: var(--light-bg-color-3);
+  --border-color: var(--light-border-color);
+  --heading-color: var(--light-heading-color);
+  --text-color: var(--light-text-color);
+  --faded-text-color: var(--light-faded-text-color);
+  --shadow-color: var(--light-shadow-color);
+  --highlight-color: var(--light-highlight-color);
+}
+
+html,
+body {
+  height: 100vh;
+  overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+}
+
+body {
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'editor output';
+  grid-template-rows: auto 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  font-family: 'Noto Sans', sans-serif;
+  color: var(--text-color);
+  background-color: var(--bg-color-2);
+}
+
+#noscript {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+header {
+  grid-area: header;
+}
+
+.box {
+  box-shadow: 0 0 10px 0 var(--shadow-color);
+  background-color: var(--bg-color-1);
+  border: 1px solid var(--border-color);
+  border-radius: 0.2rem;
+}
+
+#editor {
+  grid-area: editor;
+  margin: 1rem;
+  margin-right: 0.5rem;
+}
+
+#output {
+  grid-area: output;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 1rem;
+  margin-left: 0.5rem;
+  padding: 1rem 2rem;
+}
+#output.error {
+  color: red;
+}
+
+#output > h2 {
+  margin: 0;
+  color: var(--faded-text-color);
+  font-size: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+#output > #output-content {
+  overflow: auto;
+  flex: 1;
+}
+
+#output > #output-info {
+  border-top: 1px solid var(--border-color);
+  text-align: end;
+  color: var(--faded-text-color);
+  font-size: 0.8rem;
+  padding-top: 0.5rem;
+  height: 0.9rem;
+}
+
+#share-dialog[open] {
+  display: grid;
+  grid-template-areas:
+    'heading heading close'
+    'link copy copy';
+  grid-template-columns: 1fr auto auto;
+  gap: 1rem;
+  width: 30rem;
+  max-width: 80vw;
+  border-radius: 0.5rem;
+}
+#share-dialog > h2 {
+  grid-area: heading;
+  margin: 0;
+}
+#share-dialog > #share-dialog-close {
+  grid-area: close;
+  background-color: transparent;
+  border: none;
+}
+#share-dialog > #share-dialog-link {
+  grid-area: link;
+  background-color: var(--bg-color-3);
+  margin: 0;
+  border-radius: 0.2rem;
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.5rem;
+  text-overflow: ellipsis;
+}
+#share-dialog > #share-dialog-copy {
+  grid-area: copy;
+}

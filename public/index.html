@@ -4,15 +4,36 @@
 
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Code+Pro&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+
+    <script defer src="build/bundle.js" type="module"></script>
+
     <title>Flix Playground</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <noscript><dialog open id="noscript">You need to enable JavaScript to run this app.</dialog></noscript>
+
+    <dialog id="share-dialog" class="box">
+      <h2>Share Code</h2>
+      <button id="share-dialog-close">X</button>
+      <input type="text" readonly id="share-dialog-link"></input>
+      <button id="share-dialog-copy">Copy</button>
+    </dialog>
+
+    <header>
+      <button id="run-button">Compile & Run</button>
+      <select id="examples-dropdown">
+        <option value="placeholder" disabled selected>-- select example --</option>
+      </select>
+      <button id="share-button">Share</button>
+    </header>
+    <div id="editor" class="box"></div>
+    <div id="output" class="box">
+      <h2>Standard Output</h2>
+      <pre id="output-content"></pre>
+      <div id="output-info"></div>
+    </div>
   </body>
 </html>

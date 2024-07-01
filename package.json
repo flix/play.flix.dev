@@ -4,41 +4,18 @@
   "private": true,
   "homepage": "https://play.flix.dev/",
   "dependencies": {
-    "bootstrap": "^5.3.2",
+    "ace-builds": "^1.35.1",
     "lz-string": "^1.5.0",
     "pretty-ms": "^8.0.0",
-    "react": "^18.2.0",
-    "react-ace": "^10.1.0",
-    "react-dom": "^18.2.0",
-    "react-fontawesome": "^1.7.1",
-    "react-scripts": "^5.0.1",
-    "react-spinners": "^0.13.8",
-    "reactstrap": "^9.2.0",
     "reconnecting-websocket": "^4.4.0"
-  },
-  "overrides": {
-    "autoprefixer": "10.4.5"
   },
   "scripts": {
     "build-script": "node build-scripts/main.mjs",
-    "start": "npm run build-script && react-scripts start",
-    "build": "npm run build-script && react-scripts build",
-    "test": "npm run build-script && react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "npm run build-script && esbuild src/index.js --bundle --minify --outfile=public/build/bundle.js",
+    "watch": "npm run build -- --sourcemap --watch",
+    "start": "npm run watch -- --servedir=public"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "esbuild": "^0.21.5"
   }
 }
