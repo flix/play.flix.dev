@@ -4,9 +4,10 @@ import 'ace-builds/src-noconflict/theme-xcode'
 
 import LZString from 'lz-string'
 import ReconnectingWebSocket from 'reconnecting-websocket'
+import prettyMilliseconds from 'pretty-ms'
 
 import samples from './generated/samples.js'
-import prettyMilliseconds from 'pretty-ms'
+import defaultProgram from './defaultProgram.js'
 
 let src = ''
 let aceEditor = undefined
@@ -51,7 +52,7 @@ function initEditor() {
   // Otherwise use the default program.
   if (initialProgram === undefined) {
     console.log('Using default initial program.')
-    initialProgram = ''
+    initialProgram = defaultProgram
   }
 
   aceEditor = ace.edit('editor')
