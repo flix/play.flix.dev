@@ -1,4 +1,4 @@
-const version = '0.48.0'
+const version = '0.53.0'
 export const baseUrl = `https://raw.githubusercontent.com/flix/flix/v${version}/examples/`
 export const sampleFiles = [
   {
@@ -86,31 +86,7 @@ export const sampleFiles = [
     file: 'simple-card-game.flix',
   },
   {
-    name: 'Deriving Type Classes',
-    file: 'deriving-type-classes.flix',
-  },
-  {
     name: 'Internal Mutability with Regions',
     file: 'internal-mutability-with-regions.flix',
-  },
-  {
-    name: 'File Information',
-    file: 'file-information.flix',
-  },
-  {
-    name: 'Working with Files and Directories',
-    file: 'working-with-files-and-directories.flix',
-  },
-  {
-    name: 'Using Laziness for Infinite Streams',
-    file: 'using-laziness-for-infinite-streams.flix',
-  },
-  {
-    name: 'Using Laziness for Logging',
-    file: 'using-laziness-for-logging.flix',
-  },
-  {
-    name: 'Using Laziness to Compute Fibonacci',
-    file: 'using-laziness-to-compute-fibonacci.flix',
-  },
+  }
 ]
