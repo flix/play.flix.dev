@@ -3,7 +3,7 @@
 #################
 #
 # This script must be run inside the `examples` directory
-# of the main `flix` repository.
+# of the main Flix repository.
 #
 # It simply prints all the paths in the `examples` directory
 # and prints them as json objects that can be inserted into `sampleFiles.mjs`
