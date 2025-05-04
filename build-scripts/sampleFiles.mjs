@@ -324,5 +324,5 @@ export const sampleFiles = [
   {
     name: 'traits/trait-with-higher-kinded-type.flix',
     file: 'traits/trait-with-higher-kinded-type.flix',
-  }
+  },
 ]
