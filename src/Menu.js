@@ -76,7 +76,7 @@ class Menu extends React.Component {
           {this.getDropDown()}
         </Form>
 
-        <div>
+        <div className="links">
           <a href="https://flix.dev/">
             <Button color="link" className="ml-3">
               Website
