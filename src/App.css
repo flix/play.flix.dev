@@ -68,6 +68,24 @@ code {
   overflow-y: scroll;
 }
 
+@media only screen and (max-width: 450px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .left-pane {
+    width: 100%;
+  }
+
+  .right-pane {
+    width: 100%;
+  }
+
+  .links {
+    display: none;
+  }
+}
+
 .spinner {
   margin-top: 30vh;
   display: flex;
