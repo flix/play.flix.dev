@@ -28,7 +28,7 @@ class Menu extends React.Component {
     } else {
       return (
         <Button disabled color="danger" className="ml-2">
-          Disconnected! Try to refresh the page...
+          Disconnected!
         </Button>
       )
     }
