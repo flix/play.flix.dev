@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import { fetchSampleFiles, baseUrl } from './sampleFiles.mjs'
+import { fetchSampleFiles, baseUrl } from './fetchExamples.mjs'
 
 async function fetchSamples(baseUrl, files) {
   return await Promise.all(
