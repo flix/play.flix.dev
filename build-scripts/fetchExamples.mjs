@@ -14,6 +14,7 @@ export async function fetchSampleFiles() {
     .filter(
       entry =>
         entry.path.startsWith('examples/') &&
+        !entry.path.startsWith('examples/unsorted/') &&
         entry.type === 'blob' &&
         entry.path.endsWith('.flix') &&
         !projectDirs.some(dir => entry.path.startsWith(dir)),
