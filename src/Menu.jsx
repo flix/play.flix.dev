@@ -28,6 +28,25 @@ export default function Menu({ connected, notifyRun, notifySampleChange, url }) 
   }
 
   function getDropDown() {
+    const groups = new Map()
+    SamplesData.forEach((sample, index) => {
+      const slashIndex = sample.name.indexOf('/')
+      const group = slashIndex !== -1 ? sample.name.slice(0, slashIndex) : ''
+      const displayName = slashIndex !== -1 ? sample.name.slice(slashIndex + 1) : sample.name
+      if (!groups.has(group)) {
+        groups.set(group, [])
+      }
+      groups.get(group).push({ index, displayName })
+    })
+
+    function formatGroupLabel(key) {
+      if (!key) return 'Other'
+      return key
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+    }
+
     return (
       <select
         defaultValue={'placeholder'}
@@ -40,10 +59,14 @@ export default function Menu({ connected, notifyRun, notifySampleChange, url }) 
           -- select example --
         </option>
 
-        {SamplesData.map((sample, index) => (
-          <option key={index} value={index}>
-            {sample.name}
-          </option>
+        {[...groups.entries()].map(([group, samples]) => (
+          <optgroup key={group} label={formatGroupLabel(group)}>
+            {samples.map(({ index, displayName }) => (
+              <option key={index} value={index}>
+                {displayName}
+              </option>
+            ))}
+          </optgroup>
         ))}
       </select>
     )
