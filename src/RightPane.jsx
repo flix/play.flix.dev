@@ -7,7 +7,9 @@ export default function RightPane({ result, version, compilationTime, evaluation
     if (result !== undefined) {
       return (
         <code>
-          <pre><Ansi>{result}</Ansi></pre>
+          <pre>
+            <Ansi>{result}</Ansi>
+          </pre>
         </code>
       )
     } else {
