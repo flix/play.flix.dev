@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Button, Form } from 'reactstrap'
 import SamplesData from './data/Samples'
+import { compressToURL } from './compression'
 
-export default function Menu({ connected, notifyRun, notifySampleChange, url }) {
+export default function Menu({ connected, notifyRun, notifySampleChange, program }) {
   const [choice, setChoice] = useState(undefined)
 
   function getRunButton() {
@@ -78,7 +79,8 @@ export default function Menu({ connected, notifyRun, notifySampleChange, url }) 
     notifySampleChange(SamplesData[newChoice].code)
   }
 
-  function updateLinkUrl() {
+  async function updateLinkUrl() {
+    const url = await compressToURL(program)
     window.history.pushState(undefined, undefined, url)
   }
 
