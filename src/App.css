@@ -69,6 +69,11 @@ code {
   white-space: nowrap;
 }
 
+.menu-right {
+  display: flex;
+  align-items: center;
+}
+
 .page {
   display: flex;
   flex-direction: row;
