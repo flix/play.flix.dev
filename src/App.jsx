@@ -31,6 +31,12 @@ def main(): Unit \\\\ IO =
     println(area(Shape.Rectangle(2, 4)))
 `
 
+function getInitialTheme() {
+  const stored = localStorage.getItem('theme')
+  if (stored) return stored === 'dark'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches
+}
+
 export default function App() {
   const [connected, setConnected] = useState(undefined)
   const [program, setProgram] = useState(null)
@@ -38,6 +44,7 @@ export default function App() {
   const [version, setVersion] = useState(undefined)
   const [compilationTime, setCompilationTime] = useState(undefined)
   const [evaluationTime, setEvaluationTime] = useState(undefined)
+  const [isDark, setIsDark] = useState(getInitialTheme)
 
   const websocket = useRef(null)
   const programRef = useRef(program)
@@ -46,6 +53,17 @@ export default function App() {
   // Keep refs in sync with state
   programRef.current = program
   connectedRef.current = connected
+
+  useEffect(() => {
+    const theme = isDark ? 'dark' : 'light'
+    document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.setAttribute('data-bs-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [isDark])
+
+  const toggleDarkMode = useCallback(() => {
+    setIsDark(prev => !prev)
+  }, [])
 
   // Load initial program (async for URL decompression)
   useEffect(() => {
@@ -146,14 +164,15 @@ export default function App() {
 
   return (
     <div>
-      <Menu connected={connected} notifyRun={notifyRun} notifySampleChange={notifyOnChange} program={program} />
+      <Menu connected={connected} notifyRun={notifyRun} notifySampleChange={notifyOnChange} program={program} isDark={isDark} toggleDarkMode={toggleDarkMode} />
       <div className="page">
-        <LeftPane initial={program} notifyOnChange={notifyOnChange} />
+        <LeftPane initial={program} notifyOnChange={notifyOnChange} isDark={isDark} />
         <RightPane
           result={result}
           version={version}
           compilationTime={compilationTime}
           evaluationTime={evaluationTime}
+          isDark={isDark}
         />
       </div>
     </div>

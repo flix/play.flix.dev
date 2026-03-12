@@ -2,15 +2,16 @@ import AceEditor from 'react-ace'
 
 import 'ace-builds/src-noconflict/mode-flix'
 import 'ace-builds/src-noconflict/theme-xcode'
+import 'ace-builds/src-noconflict/theme-tomorrow_night'
 
-export default function Editor({ code, notifyOnChange }) {
+export default function Editor({ code, notifyOnChange, isDark }) {
   return (
     <div>
       <div>
         <div>
           <AceEditor
             mode="flix"
-            theme="xcode"
+            theme={isDark ? 'tomorrow_night' : 'xcode'}
             fontSize={14}
             showGutter={true}
             showPrintMargin={true}

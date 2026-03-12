@@ -3,7 +3,7 @@ import { Button, Form } from 'reactstrap'
 import SamplesData from './data/Samples'
 import { compressToURL } from './compression'
 
-export default function Menu({ connected, notifyRun, notifySampleChange, program }) {
+export default function Menu({ connected, notifyRun, notifySampleChange, program, isDark, toggleDarkMode }) {
   const [choice, setChoice] = useState(undefined)
 
   function getRunButton() {
@@ -112,6 +112,15 @@ export default function Menu({ connected, notifyRun, notifySampleChange, program
 
         <Button color="light" className="ml-3" onClick={updateLinkUrl}>
           Shareable Link <i className="fa fa-clipboard ml-2" />
+        </Button>
+
+        <Button
+          color="light"
+          onClick={toggleDarkMode}
+          style={{ width: '38px', height: '38px', padding: 0, marginLeft: '0.5rem' }}
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          <i className={isDark ? 'fa fa-sun-o' : 'fa fa-moon-o'} />
         </Button>
       </div>
     </div>
