@@ -1,28 +1,21 @@
-import React from 'react'
+import { useState } from 'react'
 import { Button, Form } from 'reactstrap'
-import FontAwesome from 'react-fontawesome'
 import SamplesData from './data/Samples'
 
-class Menu extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      choice: undefined,
-      samples: SamplesData,
-    }
-  }
+export default function Menu({ connected, notifyRun, notifySampleChange, url }) {
+  const [choice, setChoice] = useState(undefined)
 
-  getRunButton() {
-    if (this.props.connected === undefined) {
+  function getRunButton() {
+    if (connected === undefined) {
       return (
         <Button disabled color="secondary" className="ml-2">
           Connecting...
         </Button>
       )
-    } else if (this.props.connected === true) {
+    } else if (connected === true) {
       return (
-        <Button color="primary" onClick={this.props.notifyRun}>
-          Compile & Run <FontAwesome name="play" className="ml-2" />
+        <Button color="primary" onClick={notifyRun}>
+          Compile & Run <i className="fa fa-play ml-2" />
         </Button>
       )
     } else {
@@ -34,12 +27,12 @@ class Menu extends React.Component {
     }
   }
 
-  getDropDown() {
+  function getDropDown() {
     return (
       <select
         defaultValue={'placeholder'}
-        value={this.state.choice}
-        onChange={this.onDropdownChoice.bind(this)}
+        value={choice}
+        onChange={onDropdownChoice}
         style={{ textOverflow: 'ellipsis' }}
         className="ml-2 w-75"
       >
@@ -47,7 +40,7 @@ class Menu extends React.Component {
           -- select example --
         </option>
 
-        {this.state.samples.map((sample, index) => (
+        {SamplesData.map((sample, index) => (
           <option key={index} value={index}>
             {sample.name}
           </option>
@@ -56,52 +49,46 @@ class Menu extends React.Component {
     )
   }
 
-  onDropdownChoice(event) {
+  function onDropdownChoice(event) {
     let newChoice = Number(event.target.value)
-    this.setState({
-      choice: newChoice,
-    })
-    this.props.notifySampleChange(this.state.samples[newChoice].code)
+    setChoice(newChoice)
+    notifySampleChange(SamplesData[newChoice].code)
   }
 
-  updateLinkUrl() {
-    window.history.pushState(undefined, undefined, this.props.url)
+  function updateLinkUrl() {
+    window.history.pushState(undefined, undefined, url)
   }
 
-  render() {
-    return (
-      <div className="menu">
-        <Form>
-          {this.getRunButton()}
-          {this.getDropDown()}
-        </Form>
+  return (
+    <div className="menu">
+      <Form>
+        {getRunButton()}
+        {getDropDown()}
+      </Form>
 
-        <div className="links">
-          <a href="https://flix.dev/">
-            <Button color="link" className="ml-3">
-              Website
-            </Button>
-          </a>
-
-          <a href="https://doc.flix.dev/">
-            <Button color="link" className="ml-3">
-              Documentation
-            </Button>
-          </a>
-
-          <a href="https://api.flix.dev/">
-            <Button color="link" className="ml-3">
-              Standard Library
-            </Button>
-          </a>
-
-          <Button color="light" className="ml-3" onClick={this.updateLinkUrl.bind(this)}>
-            Shareable Link <FontAwesome name="clipboard" className="ml-2" />
+      <div className="links">
+        <a href="https://flix.dev/">
+          <Button color="link" className="ml-3">
+            Website
           </Button>
-        </div>
-      </div>
-    )
-  }
-}
+        </a>
 
-export default Menu
+        <a href="https://doc.flix.dev/">
+          <Button color="link" className="ml-3">
+            Documentation
+          </Button>
+        </a>
+
+        <a href="https://api.flix.dev/">
+          <Button color="link" className="ml-3">
+            Standard Library
+          </Button>
+        </a>
+
+        <Button color="light" className="ml-3" onClick={updateLinkUrl}>
+          Shareable Link <i className="fa fa-clipboard ml-2" />
+        </Button>
+      </div>
+    </div>
+  )
+}

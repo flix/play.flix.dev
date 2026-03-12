@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import './App.css'
 
 import ReconnectingWebSocket from 'reconnecting-websocket'
@@ -11,143 +11,7 @@ import RightPane from './RightPane'
 
 const SocketAddress = 'wss://tivoli.flix.dev/ws'
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-    // Determine the initial program to put in the editor.
-    let initialProgram = undefined
-
-    // Decode the initial program from the query param (if available).
-    let urlParams = new URLSearchParams(window.location.search)
-    let qparam = urlParams.get('q')
-    if (typeof qparam === 'string' && qparam.length > 0) {
-      console.log('Using initial program from query parameter.')
-      initialProgram = LZString.decompressFromEncodedURIComponent(qparam)
-    }
-
-    // Otherwise, retrieve the initial program from local storage (if available).
-    if (initialProgram === undefined) {
-      let storedProgram = localStorage.getItem('program')
-      if (typeof storedProgram === 'string') {
-        console.log('Using initial program from local storage.')
-        initialProgram = storedProgram
-      }
-    }
-
-    // Otherwise use the default program.
-    if (initialProgram === undefined) {
-      console.log('Using default initial program.')
-      initialProgram = this.getInitialProgram()
-    }
-
-    this.state = {
-      connected: undefined,
-      program: initialProgram,
-      options: {},
-      result: '',
-      version: undefined,
-      compilationTime: undefined,
-      evaluationTime: undefined,
-      url: '?q=' + LZString.compressToEncodedURIComponent(initialProgram),
-    }
-
-    this.connect()
-  }
-
-  connect() {
-    let options = {
-      connectionTimeout: 2500,
-    }
-
-    console.log('Connecting to: ' + SocketAddress)
-
-    this.websocket = new ReconnectingWebSocket(SocketAddress, [], options)
-
-    this.websocket.addEventListener('open', _ => {
-      console.log('Connected to: ' + SocketAddress)
-      this.setState({ connected: true })
-    })
-    this.websocket.addEventListener('close', event => {
-      console.log('Disconnected from: ' + SocketAddress)
-      console.log(event)
-      this.setState({ connected: false })
-    })
-    this.websocket.addEventListener('error', event => {
-      console.log('Disconnected from: ' + SocketAddress)
-      console.log(event)
-      this.setState({ connected: false })
-    })
-  }
-
-  runProgram(src, callback) {
-    if (!this.state.connected) {
-      console.log('Not connected yet')
-      return
-    }
-
-    this.websocket.onmessage = event => {
-      console.log('Received reply from: ' + SocketAddress)
-      const data = JSON.parse(event.data)
-
-      console.log(data)
-      callback(data)
-    }
-
-    let data = {
-      src: src,
-    }
-
-    this.websocket.send(JSON.stringify(data))
-  }
-
-  notifyRun() {
-    let t = new Date()
-    this.setState({ result: undefined, version: undefined, compilationTime: undefined, evaluationTime: undefined })
-    this.runProgram(this.state.program, data => {
-      let e = new Date() - t
-      console.log('Elapsed: ' + e + 'ms.')
-      this.setState({
-        result: data.result,
-        version: data.version,
-        compilationTime: data.compilationTime,
-        evaluationTime: data.evaluationTime,
-      })
-    })
-  }
-
-  notifyOnChange(src) {
-    localStorage.setItem('program', src)
-    let qparam = LZString.compressToEncodedURIComponent(src)
-    let url = '?q=' + qparam
-    this.setState({ program: src, url: url })
-  }
-
-  render() {
-    return (
-      <div>
-        <Menu
-          connected={this.state.connected}
-          options={this.state.options}
-          notifyRun={this.notifyRun.bind(this)}
-          notifySampleChange={this.notifyOnChange.bind(this)}
-          url={this.state.url}
-        />
-        <div className="page">
-          <LeftPane initial={this.state.program} notifyOnChange={this.notifyOnChange.bind(this)} />
-          <RightPane
-            result={this.state.result}
-            version={this.state.version}
-            compilationTime={this.state.compilationTime}
-            evaluationTime={this.state.evaluationTime}
-          />
-        </div>
-      </div>
-    )
-  }
-
-  getInitialProgram() {
-    return `/// An algebraic data type for shapes.
+const defaultProgram = `/// An algebraic data type for shapes.
 enum Shape {
     case Circle(Int32),          // circle radius
     case Square(Int32),          // side length
@@ -163,10 +27,131 @@ def area(s: Shape): Int32 = match s {
 }
 
 // Computes the area of a 2 by 4.
-def main(): Unit \\ IO =
+def main(): Unit \\\\ IO =
     println(area(Shape.Rectangle(2, 4)))
 `
+
+function getInitialProgram() {
+  // Decode the initial program from the query param (if available).
+  let urlParams = new URLSearchParams(window.location.search)
+  let qparam = urlParams.get('q')
+  if (typeof qparam === 'string' && qparam.length > 0) {
+    console.log('Using initial program from query parameter.')
+    return LZString.decompressFromEncodedURIComponent(qparam)
   }
+
+  // Otherwise, retrieve the initial program from local storage (if available).
+  let storedProgram = localStorage.getItem('program')
+  if (typeof storedProgram === 'string') {
+    console.log('Using initial program from local storage.')
+    return storedProgram
+  }
+
+  // Otherwise use the default program.
+  console.log('Using default initial program.')
+  return defaultProgram
 }
 
-export default App
+export default function App() {
+  const initialProgram = useRef(getInitialProgram()).current
+
+  const [connected, setConnected] = useState(undefined)
+  const [program, setProgram] = useState(initialProgram)
+  const [result, setResult] = useState('')
+  const [version, setVersion] = useState(undefined)
+  const [compilationTime, setCompilationTime] = useState(undefined)
+  const [evaluationTime, setEvaluationTime] = useState(undefined)
+  const [url, setUrl] = useState('?q=' + LZString.compressToEncodedURIComponent(initialProgram))
+
+  const websocket = useRef(null)
+  const programRef = useRef(program)
+  const connectedRef = useRef(connected)
+
+  // Keep refs in sync with state
+  programRef.current = program
+  connectedRef.current = connected
+
+  useEffect(() => {
+    let options = {
+      connectionTimeout: 2500,
+    }
+
+    console.log('Connecting to: ' + SocketAddress)
+
+    const ws = new ReconnectingWebSocket(SocketAddress, [], options)
+    websocket.current = ws
+
+    ws.addEventListener('open', () => {
+      console.log('Connected to: ' + SocketAddress)
+      setConnected(true)
+    })
+    ws.addEventListener('close', event => {
+      console.log('Disconnected from: ' + SocketAddress)
+      console.log(event)
+      setConnected(false)
+    })
+    ws.addEventListener('error', event => {
+      console.log('Disconnected from: ' + SocketAddress)
+      console.log(event)
+      setConnected(false)
+    })
+
+    return () => {
+      ws.close()
+    }
+  }, [])
+
+  const notifyOnChange = useCallback(src => {
+    localStorage.setItem('program', src)
+    let qparam = LZString.compressToEncodedURIComponent(src)
+    setProgram(src)
+    setUrl('?q=' + qparam)
+  }, [])
+
+  const notifyRun = useCallback(() => {
+    if (!connectedRef.current) {
+      console.log('Not connected yet')
+      return
+    }
+
+    let t = new Date()
+    setResult(undefined)
+    setVersion(undefined)
+    setCompilationTime(undefined)
+    setEvaluationTime(undefined)
+
+    websocket.current.onmessage = event => {
+      console.log('Received reply from: ' + SocketAddress)
+      const data = JSON.parse(event.data)
+
+      console.log(data)
+      let e = new Date() - t
+      console.log('Elapsed: ' + e + 'ms.')
+      setResult(data.result)
+      setVersion(data.version)
+      setCompilationTime(data.compilationTime)
+      setEvaluationTime(data.evaluationTime)
+    }
+
+    let data = {
+      src: programRef.current,
+    }
+
+    websocket.current.send(JSON.stringify(data))
+  }, [])
+
+  return (
+    <div>
+      <Menu connected={connected} notifyRun={notifyRun} notifySampleChange={notifyOnChange} url={url} />
+      <div className="page">
+        <LeftPane initial={program} notifyOnChange={notifyOnChange} />
+        <RightPane
+          result={result}
+          version={version}
+          compilationTime={compilationTime}
+          evaluationTime={evaluationTime}
+        />
+      </div>
+    </div>
+  )
+}
