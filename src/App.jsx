@@ -3,7 +3,7 @@ import './App.css'
 
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
-import LZString from 'lz-string'
+import { decompressFromURL } from './compression'
 
 import Menu from './Menu'
 import LeftPane from './LeftPane'
@@ -31,37 +31,13 @@ def main(): Unit \\\\ IO =
     println(area(Shape.Rectangle(2, 4)))
 `
 
-function getInitialProgram() {
-  // Decode the initial program from the query param (if available).
-  let urlParams = new URLSearchParams(window.location.search)
-  let qparam = urlParams.get('q')
-  if (typeof qparam === 'string' && qparam.length > 0) {
-    console.log('Using initial program from query parameter.')
-    return LZString.decompressFromEncodedURIComponent(qparam)
-  }
-
-  // Otherwise, retrieve the initial program from local storage (if available).
-  let storedProgram = localStorage.getItem('program')
-  if (typeof storedProgram === 'string') {
-    console.log('Using initial program from local storage.')
-    return storedProgram
-  }
-
-  // Otherwise use the default program.
-  console.log('Using default initial program.')
-  return defaultProgram
-}
-
 export default function App() {
-  const initialProgram = useRef(getInitialProgram()).current
-
   const [connected, setConnected] = useState(undefined)
-  const [program, setProgram] = useState(initialProgram)
+  const [program, setProgram] = useState(null)
   const [result, setResult] = useState('')
   const [version, setVersion] = useState(undefined)
   const [compilationTime, setCompilationTime] = useState(undefined)
   const [evaluationTime, setEvaluationTime] = useState(undefined)
-  const [url, setUrl] = useState('?q=' + LZString.compressToEncodedURIComponent(initialProgram))
 
   const websocket = useRef(null)
   const programRef = useRef(program)
@@ -70,6 +46,31 @@ export default function App() {
   // Keep refs in sync with state
   programRef.current = program
   connectedRef.current = connected
+
+  // Load initial program (async for URL decompression)
+  useEffect(() => {
+    async function loadInitialProgram() {
+      const urlParams = new URLSearchParams(window.location.search)
+      const qparam = urlParams.get('q')
+      if (typeof qparam === 'string' && qparam.length > 0) {
+        console.log('Using initial program from query parameter.')
+        const decoded = await decompressFromURL(qparam)
+        setProgram(decoded)
+        return
+      }
+
+      const storedProgram = localStorage.getItem('program')
+      if (typeof storedProgram === 'string') {
+        console.log('Using initial program from local storage.')
+        setProgram(storedProgram)
+        return
+      }
+
+      console.log('Using default initial program.')
+      setProgram(defaultProgram)
+    }
+    loadInitialProgram()
+  }, [])
 
   useEffect(() => {
     let options = {
@@ -103,9 +104,10 @@ export default function App() {
 
   const notifyOnChange = useCallback(src => {
     localStorage.setItem('program', src)
-    let qparam = LZString.compressToEncodedURIComponent(src)
     setProgram(src)
-    setUrl('?q=' + qparam)
+    if (window.location.search) {
+      window.history.replaceState(undefined, undefined, window.location.pathname)
+    }
   }, [])
 
   const notifyRun = useCallback(() => {
@@ -140,9 +142,11 @@ export default function App() {
     websocket.current.send(JSON.stringify(data))
   }, [])
 
+  if (program === null) return null
+
   return (
     <div>
-      <Menu connected={connected} notifyRun={notifyRun} notifySampleChange={notifyOnChange} url={url} />
+      <Menu connected={connected} notifyRun={notifyRun} notifySampleChange={notifyOnChange} program={program} />
       <div className="page">
         <LeftPane initial={program} notifyOnChange={notifyOnChange} />
         <RightPane
