@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import { sampleFiles, baseUrl } from './sampleFiles.mjs'
+import { fetchSampleFiles, baseUrl } from './fetchExamples.mjs'
 
 async function fetchSamples(baseUrl, files) {
   return await Promise.all(
@@ -16,6 +16,7 @@ async function fetchSamples(baseUrl, files) {
   )
 }
 
+const sampleFiles = await fetchSampleFiles()
 const samples = await fetchSamples(baseUrl, sampleFiles)
 const objString = JSON.stringify(samples)
 const fileString = `
@@ -27,3 +28,9 @@ export default ${objString};
 // The file is placed in the src directory to include it in the bundle
 fs.mkdirSync('./src/data', { recursive: true })
 fs.writeFileSync('./src/data/Samples.js', fileString)
+
+console.log('Samples included:')
+for (const s of samples) {
+  console.log(`  ${s.name}`)
+}
+console.log(`\nTotal: ${samples.length}`)
