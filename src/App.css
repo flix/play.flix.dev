@@ -9,7 +9,7 @@
   --gutter-text: #b4b4b4;
 }
 
-[data-theme="dark"] {
+[data-theme='dark'] {
   --bg-body: #1a1a1a;
   --bg-left-pane: #1d1f21;
   --bg-right-pane: #212121;
@@ -20,19 +20,19 @@
   --gutter-text: #555555;
 }
 
-[data-theme="dark"] select {
+[data-theme='dark'] select {
   background-color: var(--bg-left-pane);
   color: var(--text-code);
   border-color: var(--border-color);
 }
 
-[data-theme="dark"] .btn-light {
+[data-theme='dark'] .btn-light {
   background-color: #333333;
   border-color: #444444;
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .btn-light:hover {
+[data-theme='dark'] .btn-light:hover {
   background-color: #444444;
   border-color: #555555;
   color: #ffffff;

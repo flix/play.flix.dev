@@ -164,7 +164,14 @@ export default function App() {
 
   return (
     <div>
-      <Menu connected={connected} notifyRun={notifyRun} notifySampleChange={notifyOnChange} program={program} isDark={isDark} toggleDarkMode={toggleDarkMode} />
+      <Menu
+        connected={connected}
+        notifyRun={notifyRun}
+        notifySampleChange={notifyOnChange}
+        program={program}
+        isDark={isDark}
+        toggleDarkMode={toggleDarkMode}
+      />
       <div className="page">
         <LeftPane initial={program} notifyOnChange={notifyOnChange} isDark={isDark} />
         <RightPane
