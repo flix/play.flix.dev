@@ -1,3 +1,4 @@
+import Ansi from 'ansi-to-react'
 import GridLoader from 'react-spinners/GridLoader'
 import prettyms from 'pretty-ms'
 
@@ -6,7 +7,9 @@ export default function RightPane({ result, version, compilationTime, evaluation
     if (result !== undefined) {
       return (
         <code>
-          <pre>{result}</pre>
+          <pre>
+            <Ansi>{result}</Ansi>
+          </pre>
         </code>
       )
     } else {
