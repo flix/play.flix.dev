@@ -91,38 +91,40 @@ export default function Menu({ connected, notifyRun, notifySampleChange, program
         {getDropDown()}
       </Form>
 
-      <div className="links">
-        <a href="https://flix.dev/">
-          <Button color="link" className="ml-3">
-            Website
-          </Button>
-        </a>
+      <div className="menu-right">
+        <div className="links">
+          <a href="https://flix.dev/">
+            <Button color="link" className="ml-3">
+              Website
+            </Button>
+          </a>
 
-        <a href="https://doc.flix.dev/">
-          <Button color="link" className="ml-3">
-            Documentation
-          </Button>
-        </a>
+          <a href="https://doc.flix.dev/">
+            <Button color="link" className="ml-3">
+              Documentation
+            </Button>
+          </a>
 
-        <a href="https://api.flix.dev/">
-          <Button color="link" className="ml-3">
-            Standard Library
-          </Button>
-        </a>
+          <a href="https://api.flix.dev/">
+            <Button color="link" className="ml-3">
+              Standard Library
+            </Button>
+          </a>
 
-        <Button color="light" className="ml-3" onClick={updateLinkUrl}>
-          Shareable Link <i className="fa fa-clipboard ml-2" />
+          <Button color="light" className="ml-3" onClick={updateLinkUrl}>
+            Shareable Link <i className="fa fa-clipboard ml-2" />
+          </Button>
+        </div>
+
+        <Button
+          color="light"
+          onClick={toggleDarkMode}
+          style={{ width: '38px', height: '38px', padding: 0, marginLeft: '0.5rem' }}
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          <i className={isDark ? 'fa fa-sun-o' : 'fa fa-moon-o'} />
         </Button>
       </div>
-
-      <Button
-        color="light"
-        onClick={toggleDarkMode}
-        style={{ width: '38px', height: '38px', padding: 0, marginLeft: '0.5rem' }}
-        title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-      >
-        <i className={isDark ? 'fa fa-sun-o' : 'fa fa-moon-o'} />
-      </Button>
     </div>
   )
 }
