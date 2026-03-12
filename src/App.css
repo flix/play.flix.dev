@@ -136,10 +136,17 @@ code {
   }
 }
 
+.right-pane-top {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .spinner {
-  margin-top: 30vh;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 
 .statistics {
