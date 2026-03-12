@@ -9,7 +9,7 @@ function useMediaQuery(query) {
   const [matches, setMatches] = useState(() => window.matchMedia(query).matches)
   useEffect(() => {
     const mql = window.matchMedia(query)
-    const handler = (e) => setMatches(e.matches)
+    const handler = e => setMatches(e.matches)
     mql.addEventListener('change', handler)
     return () => mql.removeEventListener('change', handler)
   }, [query])
@@ -17,8 +17,8 @@ function useMediaQuery(query) {
 }
 
 export default function Editor({ code, notifyOnChange, isDark }) {
-  const isSmallScreen = useMediaQuery('(max-width: 768px)')
-  const editorHeight = isSmallScreen ? 'calc(50vh - 0.5rem)' : 'calc(100vh - 5.8rem)'
+  const isSmallScreen = useMediaQuery('(max-width: 1400px)')
+  const editorHeight = isSmallScreen ? 'calc(50vh - 3.5rem)' : 'calc(100vh - 5.8rem)'
 
   return (
     <div>
