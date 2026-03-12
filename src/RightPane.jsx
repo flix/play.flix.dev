@@ -2,7 +2,7 @@ import Ansi from 'ansi-to-react'
 import GridLoader from 'react-spinners/GridLoader'
 import prettyms from 'pretty-ms'
 
-export default function RightPane({ result, version, compilationTime, evaluationTime }) {
+export default function RightPane({ result, version, compilationTime, evaluationTime, isDark }) {
   function getResult() {
     if (result !== undefined) {
       return (
@@ -15,7 +15,7 @@ export default function RightPane({ result, version, compilationTime, evaluation
     } else {
       return (
         <div className="spinner">
-          <GridLoader sizeUnit={'px'} size={50} color={'#28a745'} loading={true} />
+          <GridLoader sizeUnit={'px'} size={50} color={isDark ? '#4caf80' : '#28a745'} loading={true} />
         </div>
       )
     }
