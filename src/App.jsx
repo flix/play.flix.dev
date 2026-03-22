@@ -4,6 +4,7 @@ import './App.css'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 
 import { decompressFromURL } from './compression'
+import SamplesData from './data/Samples'
 
 import Menu from './Menu'
 import LeftPane from './LeftPane'
@@ -27,7 +28,7 @@ def area(s: Shape): Int32 = match s {
 }
 
 // Computes the area of a 2 by 4.
-def main(): Unit \\\\ IO =
+def main(): Unit \\ IO =
     println(area(Shape.Rectangle(2, 4)))
 `
 
@@ -45,6 +46,7 @@ export default function App() {
   const [compilationTime, setCompilationTime] = useState(undefined)
   const [evaluationTime, setEvaluationTime] = useState(undefined)
   const [isDark, setIsDark] = useState(getInitialTheme)
+  const [selectedExampleIndex, setSelectedExampleIndex] = useState(undefined)
 
   const websocket = useRef(null)
   const programRef = useRef(program)
@@ -75,6 +77,18 @@ export default function App() {
         const decoded = await decompressFromURL(qparam)
         setProgram(decoded)
         return
+      }
+
+      const eparam = urlParams.get('e')
+      if (typeof eparam === 'string' && eparam.length > 0) {
+        const exampleName = eparam.endsWith('.flix') ? eparam : eparam + '.flix'
+        const index = SamplesData.findIndex(s => s.name.toLowerCase() === exampleName.toLowerCase())
+        if (index !== -1) {
+          console.log('Using initial program from example parameter.')
+          setProgram(SamplesData[index].code)
+          setSelectedExampleIndex(index)
+          return
+        }
       }
 
       const storedProgram = localStorage.getItem('program')
@@ -121,11 +135,22 @@ export default function App() {
   }, [])
 
   const notifyOnChange = useCallback(src => {
+    // Skip if the value hasn't actually changed (e.g. React-Ace echoing a prop update)
+    if (src === programRef.current) return
     localStorage.setItem('program', src)
     setProgram(src)
     if (window.location.search) {
       window.history.replaceState(undefined, undefined, window.location.pathname)
     }
+  }, [])
+
+  const notifySampleChange = useCallback(index => {
+    const sample = SamplesData[index]
+    localStorage.setItem('program', sample.code)
+    setProgram(sample.code)
+    setSelectedExampleIndex(index)
+    const name = sample.name.replace(/\.flix$/, '')
+    window.history.replaceState(undefined, undefined, `?e=${encodeURIComponent(name)}`)
   }, [])
 
   const notifyRun = useCallback(() => {
@@ -167,7 +192,8 @@ export default function App() {
       <Menu
         connected={connected}
         notifyRun={notifyRun}
-        notifySampleChange={notifyOnChange}
+        notifySampleChange={notifySampleChange}
+        selectedExampleIndex={selectedExampleIndex}
         program={program}
         isDark={isDark}
         toggleDarkMode={toggleDarkMode}
