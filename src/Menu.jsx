@@ -1,10 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Form } from 'reactstrap'
 import SamplesData from './data/Samples'
 import { compressToURL } from './compression'
 
-export default function Menu({ connected, notifyRun, notifySampleChange, program, isDark, toggleDarkMode }) {
-  const [choice, setChoice] = useState(undefined)
+export default function Menu({
+  connected,
+  notifyRun,
+  notifySampleChange,
+  selectedExampleIndex,
+  program,
+  isDark,
+  toggleDarkMode,
+}) {
+  const [choice, setChoice] = useState(selectedExampleIndex)
+
+  useEffect(() => {
+    if (selectedExampleIndex !== undefined) {
+      setChoice(selectedExampleIndex)
+    }
+  }, [selectedExampleIndex])
 
   function getRunButton() {
     if (connected === undefined) {
@@ -76,7 +90,7 @@ export default function Menu({ connected, notifyRun, notifySampleChange, program
   function onDropdownChoice(event) {
     let newChoice = Number(event.target.value)
     setChoice(newChoice)
-    notifySampleChange(SamplesData[newChoice].code)
+    notifySampleChange(newChoice)
   }
 
   async function updateLinkUrl() {
